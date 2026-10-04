@@ -107,11 +107,11 @@ export const INITIAL_RULES: ValidationRule[] = [
   },
 ];
 
-// The Signature Demo Application (APP-1024)
+// The Signature Demo Application (APP-10284)
 export const SIGNATURE_DEMO_APP: ApplicationData = {
-  id: 'APP-1024',
+  id: 'APP-10284',
   applicantId: 'usr_rahul_01',
-  applicantName: 'Rahul Sharma',
+  applicantName: 'Rahul Kumar', // Initially Rahul Kumar (mismatch with PAN: Rahul Sharma)
   applicantEmail: 'rahul.sharma@enterprise-hub.in',
   applicantPhone: '98765432', // Deliberately incomplete (8 digits instead of 10)
   applicantDob: '2002-08-15',
@@ -124,21 +124,21 @@ export const SIGNATURE_DEMO_APP: ApplicationData = {
     businessName: 'NovaTech Digital Solutions Pvt Ltd',
     entityType: 'Private Limited Company',
     annualTurnoverEstimated: '₹45,00,000',
-    authorizedSignatory: 'Rahul Sharma',
+    authorizedSignatory: 'Rahul Kumar',
     gstinNumber: '29ABCDE1234F1Z5',
   },
   status: 'correction_required',
   priority: 'high',
   priorityReason: 'SLA risk (02h 14m remaining) + 3 compliance discrepancies detected',
   category: 'pending_verification',
-  progress: 68,
+  progress: 64,
   submittedAt: '2026-10-04T10:32:00Z',
   lastUpdatedAt: '2026-10-04T10:34:20Z',
   slaDeadline: new Date(Date.now() + 2 * 3600 * 1000 + 14 * 60 * 1000 + 32 * 1000).toISOString(),
   documents: [
     {
-      id: 'doc_pan_1024',
-      applicationId: 'APP-1024',
+      id: 'doc_pan_10284',
+      applicationId: 'APP-10284',
       type: 'pan_card',
       name: 'PAN Card (National Tax ID)',
       fileName: 'rahul_pan_card_front.pdf',
@@ -152,10 +152,10 @@ export const SIGNATURE_DEMO_APP: ApplicationData = {
       extractedFields: {
         fullName: {
           label: 'Full Legal Name',
-          value: 'Rahul K. Sharma',
+          value: 'Rahul Sharma',
           confidence: 98,
           isMatch: false,
-          mismatchDetail: 'Mismatch with application form name "Rahul Sharma" (Middle initial "K." detected)',
+          mismatchDetail: 'Mismatch with application form name "Rahul Kumar" (PAN document states "Rahul Sharma")',
           boundingBox: { x: 10, y: 22, width: 45, height: 12 },
         },
         panNumber: {
@@ -182,8 +182,8 @@ export const SIGNATURE_DEMO_APP: ApplicationData = {
       },
     },
     {
-      id: 'doc_id_1024',
-      applicationId: 'APP-1024',
+      id: 'doc_id_10284',
+      applicationId: 'APP-10284',
       type: 'identity_proof',
       name: 'National Identity Proof (Aadhaar/Passport)',
       fileName: 'identity_verification_card.pdf',
@@ -204,7 +204,7 @@ export const SIGNATURE_DEMO_APP: ApplicationData = {
         },
         name: {
           label: 'Identity Name',
-          value: 'Rahul K. Sharma',
+          value: 'Rahul Sharma',
           confidence: 95,
           isMatch: false,
           boundingBox: { x: 15, y: 55, width: 50, height: 12 },
@@ -212,8 +212,8 @@ export const SIGNATURE_DEMO_APP: ApplicationData = {
       },
     },
     {
-      id: 'doc_address_1024',
-      applicationId: 'APP-1024',
+      id: 'doc_address_10284',
+      applicationId: 'APP-10284',
       type: 'address_proof',
       name: 'Registered Address Proof Document',
       fileName: 'unreadable_electricity_bill_damaged.pdf',
@@ -229,12 +229,12 @@ export const SIGNATURE_DEMO_APP: ApplicationData = {
     },
   ],
   validation: {
-    overallScore: 68,
+    overallScore: 64,
     healthBreakdown: {
-      overall: 68,
-      documentCompleteness: 66,
-      fieldValidity: 74,
-      crossDocumentConsistency: 60,
+      overall: 64,
+      documentCompleteness: 60,
+      fieldValidity: 70,
+      crossDocumentConsistency: 58,
       ocrConfidence: 71,
     },
     status: 'correction_required',
@@ -247,13 +247,32 @@ export const SIGNATURE_DEMO_APP: ApplicationData = {
     },
     issues: [
       {
+        id: 'issue_name_mismatch',
+        field: 'applicantName',
+        category: 'consistency',
+        title: 'Applicant Name Mismatch',
+        severity: 'error',
+        status: 'active',
+        currentValue: 'Rahul Kumar',
+        expectedValue: 'Rahul Sharma',
+        affectedDocument: 'PAN_CARD.pdf',
+        aiExplanation: {
+          ruleId: 'NAME_MATCH_001',
+          whyNeedsAttention: 'The name entered in the application does not match the name extracted from the uploaded identity document.',
+          detectedIssue: 'Application legal name differs from official document extraction',
+          affectedDocument: 'PAN_CARD.pdf',
+          recommendedChange: 'Verify and correct the applicant name.',
+          suggestedCorrection: 'Rahul Sharma',
+        },
+      },
+      {
         id: 'issue_missing_address',
         field: 'documents.address_proof',
         category: 'documents',
-        title: 'Missing or Corrupted Address Proof',
+        title: 'Missing Address Proof',
         severity: 'error',
         status: 'active',
-        currentValue: 'unreadable_electricity_bill_damaged.pdf (OCR failed: 22% confidence)',
+        currentValue: 'Missing / Unreadable (OCR failed: 22% confidence)',
         expectedValue: 'Clear, readable Utility Bill, Bank Passbook, or Lease Agreement (<90 days old)',
         affectedDocument: 'Registered Address Proof Document',
         aiExplanation: {
@@ -261,27 +280,8 @@ export const SIGNATURE_DEMO_APP: ApplicationData = {
           whyNeedsAttention: 'The uploaded file "unreadable_electricity_bill_damaged.pdf" failed OCR processing due to low resolution (22% confidence floor). Address verification cannot proceed without a legible proof.',
           detectedIssue: 'Document unreadable / Optical parsing failed',
           affectedDocument: 'Address Proof (Electricity Bill / Lease Agreement)',
-          recommendedChange: 'Upload a high-resolution PDF or scan of an Electricity Bill, Municipal Tax Receipt, or Registered Lease Agreement clearly showing the business premise address: "Suite 402, Innovate Tower, Cyber Park, Bengaluru 560100".',
+          recommendedChange: 'Upload a high-resolution PDF or scan of an Electricity Bill, Municipal Tax Receipt, or Registered Lease Agreement.',
           suggestedCorrection: 'Upload valid address_proof.pdf',
-        },
-      },
-      {
-        id: 'issue_name_mismatch',
-        field: 'applicantName',
-        category: 'consistency',
-        title: 'Name Consistency Mismatch',
-        severity: 'warning',
-        status: 'active',
-        currentValue: 'Rahul Sharma',
-        expectedValue: 'Rahul K. Sharma (as detected on PAN & Government Identity Document)',
-        affectedDocument: 'PAN Card (ABCDE1234F)',
-        aiExplanation: {
-          ruleId: 'RULE_NAME_MATCH_001',
-          whyNeedsAttention: 'The name entered in your basic application is "Rahul Sharma", but the name extracted with 98% confidence from your PAN Card and National ID is "Rahul K. Sharma".',
-          detectedIssue: 'Applicant name lacks middle initial recorded on official identity document',
-          affectedDocument: 'PAN Card & National ID',
-          recommendedChange: 'Update your application legal name to match your official government records ("Rahul K. Sharma") or verify that this is your intended primary registration identity.',
-          suggestedCorrection: 'Rahul K. Sharma',
         },
       },
       {

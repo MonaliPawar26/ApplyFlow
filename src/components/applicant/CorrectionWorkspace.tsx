@@ -34,7 +34,7 @@ export const CorrectionWorkspace: React.FC = () => {
   } = useApp();
 
   const [selectedIssueId, setSelectedIssueId] = useState<string>('issue_missing_address');
-  const [nameInput, setNameInput] = useState<string>('Rahul K. Sharma');
+  const [nameInput, setNameInput] = useState<string>('Rahul Sharma');
   const [phoneInput, setPhoneInput] = useState<string>('9876543210');
   const [isUploadingDoc, setIsUploadingDoc] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
@@ -409,9 +409,9 @@ export const CorrectionWorkspace: React.FC = () => {
                   Before (Application Form)
                 </span>
                 <p className="text-sm font-mono font-bold text-rose-600 dark:text-rose-400 mt-0.5">
-                  Rahul Sharma
+                  Rahul Kumar
                 </p>
-                <span className="text-[10px] text-slate-400">Omitted middle initial "K."</span>
+                <span className="text-[10px] text-slate-400">Incorrect surname entered</span>
               </div>
 
               <div className="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 dark:border-blue-800">
@@ -419,7 +419,7 @@ export const CorrectionWorkspace: React.FC = () => {
                   Detected on Official PAN (98% OCR)
                 </span>
                 <p className="text-sm font-mono font-bold text-blue-900 dark:text-blue-200 mt-0.5">
-                  Rahul K. Sharma
+                  Rahul Sharma
                 </p>
                 <span className="text-[10px] text-blue-600 dark:text-blue-400">Official Government Record</span>
               </div>

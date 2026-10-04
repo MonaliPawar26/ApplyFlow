@@ -26,8 +26,8 @@ export const DemoBanner: React.FC = () => {
     setDemoScenariosModalOpen,
   } = useApp();
 
-  const isDemoApp = activeApplication.id === 'APP-1024';
-  const hasIssues = isDemoApp && activeApplication.status === 'correction_required';
+  const isDemoApp = activeApplication.id === 'APP-10284' || activeApplication.id === 'APP-1024';
+  const hasIssues = activeApplication.status === 'correction_required';
 
   return (
     <div className="bg-gradient-to-r from-slate-950 via-navy-900 to-slate-950 text-white border-b border-slate-800 px-4 py-2 sm:py-2.5 shadow-sm text-xs sm:text-sm z-30">
@@ -45,12 +45,12 @@ export const DemoBanner: React.FC = () => {
           <span className="hidden md:inline-block text-slate-300 truncate">
             {hasIssues ? (
               <span>
-                Active Demo: <strong className="text-white">APP-1024 ({activeApplication.applicantName})</strong> — Health: <span className="font-mono text-amber-400 font-bold">68/100</span> (3 issues detected).
+                Active Demo: <strong className="text-white">{activeApplication.id} ({activeApplication.typeSpecificFields.authorizedSignatory || 'Rahul Sharma'})</strong> — Health: <span className="font-mono text-amber-400 font-bold">{activeApplication.validation.overallScore}/100</span> (3 issues detected).
               </span>
-            ) : isDemoApp && activeApplication.status === 'validated' ? (
+            ) : activeApplication.status === 'validated' ? (
               <span className="text-emerald-300 font-medium inline-flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                APP-1024 100% Validated (Health: 98/100)! Auto-routed to Standard Queue.
+                {activeApplication.id} 100% Validated (Health: {activeApplication.validation.overallScore}/100)! Auto-routed to Standard Queue.
               </span>
             ) : (
               <span>Enterprise Smart Application Processing & Validation Engine</span>

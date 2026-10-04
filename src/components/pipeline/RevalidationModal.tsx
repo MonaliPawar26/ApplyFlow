@@ -224,19 +224,52 @@ export const RevalidationModal: React.FC = () => {
                 All 3 remediation items have been verified. Identity consistency, address proof OCR, and phone format checksums are 100% compliant.
               </p>
 
+              {/* Score Progression: 64 → 72 → 86 → 98 */}
+              <div className="mt-4 p-4 rounded-xl bg-slate-900 text-white border border-slate-800 flex items-center justify-between">
+                <div className="text-left">
+                  <div className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Health Score Progression</div>
+                  <div className="text-xs text-emerald-400 font-medium">All issues resolved</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-sm text-slate-500 line-through">64</span>
+                  <span className="text-slate-500">→</span>
+                  <span className="font-mono text-sm text-amber-400">72</span>
+                  <span className="text-slate-500">→</span>
+                  <span className="font-mono text-sm text-blue-400">86</span>
+                  <span className="text-slate-500">→</span>
+                  <span className="font-mono text-2xl font-black text-emerald-400 animate-pulse">98 / 100</span>
+                </div>
+              </div>
+
+              {/* Status Transition: CORRECTION REQUIRED → VALIDATED */}
+              <div className="mt-3 flex items-center justify-center gap-3 text-xs font-mono font-bold">
+                <span className="px-2.5 py-1 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
+                  CORRECTION REQUIRED
+                </span>
+                <span className="text-emerald-500 text-base">➔</span>
+                <span className="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                  VALIDATED
+                </span>
+              </div>
+
               {/* Categorization Callout */}
-              <div className="mt-5 p-3.5 bg-white dark:bg-slate-800 rounded-xl border border-emerald-200 dark:border-emerald-800/60 inline-flex items-center gap-3 text-left shadow-subtle">
-                <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300">
-                  <Layers className="w-5 h-5" />
+              <div className="mt-3 p-3.5 bg-white dark:bg-slate-800 rounded-xl border border-emerald-200 dark:border-emerald-800/60 flex items-center justify-between text-left shadow-subtle">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono uppercase">
+                      Category & Processing Route:
+                    </p>
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                      Category: STANDARD • Route: STANDARD PROCESSING
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                    Automated Routing Assigned:
-                  </p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white">
-                    Standard Processing Queue (MCA Compliance Fast-Track)
-                  </p>
-                </div>
+                <span className="px-2.5 py-1 rounded-full text-xs font-mono font-bold bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300">
+                  AUTO-ROUTED
+                </span>
               </div>
             </div>
 

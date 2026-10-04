@@ -37,43 +37,43 @@ export const OfficerDashboard: React.FC = () => {
       {/* 6 Top KPI Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         <StatCard
-          title="Total Applications"
-          value="1,248"
-          subtitle="All-time intake"
+          title="Applications"
+          value="128"
+          subtitle="Active in pipeline"
           variant="default"
         />
         <StatCard
-          title="Pending Queue"
-          value="186"
-          subtitle="In automated OCR"
+          title="Processing"
+          value="23"
+          subtitle="Automated checks"
           icon={<Clock className="w-4 h-4" />}
           variant="info"
         />
         <StatCard
-          title="Correction Req."
-          value="214"
-          subtitle="Applicant fixing"
+          title="Correction"
+          value="17"
+          subtitle="Applicant remediation"
           icon={<AlertTriangle className="w-4 h-4" />}
           variant="warning"
         />
         <StatCard
-          title="Validated"
-          value="742"
-          subtitle="100% checks passed"
-          icon={<CheckCircle2 className="w-4 h-4" />}
-          variant="success"
-        />
-        <StatCard
           title="Manual Review"
-          value="15"
-          subtitle="Low OCR confidence"
+          value="8"
+          subtitle="Officer attention"
           icon={<UserCheck className="w-4 h-4" />}
           variant="purple"
         />
         <StatCard
+          title="SLA Risk"
+          value="4"
+          subtitle="Within 2 hours"
+          icon={<AlertTriangle className="w-4 h-4 text-rose-500" />}
+          variant="warning"
+        />
+        <StatCard
           title="Completed"
-          value="91"
-          subtitle="Certified today"
+          value="76"
+          subtitle="Successfully processed"
           icon={<Award className="w-4 h-4" />}
           variant="success"
         />

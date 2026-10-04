@@ -104,7 +104,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentUser, setCurrentUser] = useState<User>(USERS.applicant);
   const [currentRoute, setCurrentRoute] = useState<ViewRoute>('landing');
   const [applications, setApplications] = useState<ApplicationData[]>(INITIAL_APPLICATIONS);
-  const [activeApplicationId, setActiveApplicationId] = useState<string>('APP-1024');
+  const [activeApplicationId, setActiveApplicationId] = useState<string>('APP-10284');
   const [timeline, setTimeline] = useState<TimelineEvent[]>(INITIAL_TIMELINE);
   const [telemetry, setTelemetry] = useState<TelemetryEvent[]>(INITIAL_TELEMETRY);
   const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>(INITIAL_AUDIT_LOGS);
@@ -508,8 +508,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         userId: 'usr_rahul_01',
         applicationId,
         type: 'validated',
-        title: 'Application APP-1024 Validated Successfully',
-        message: 'Your corrected submission has passed all automated checks and is now categorized for Standard Processing.',
+        title: `Application ${applicationId} Validated Successfully`,
+        message: `Your corrected submission has passed all automated checks and is now categorized for Standard Processing.`,
         timestamp: 'Just now',
         isRead: false,
         actionUrl: 'validation_center',
@@ -518,7 +518,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
       addToast({
         title: 'Validation Passed (Score: 98/100)!',
-        message: 'Application APP-1024 has been verified and categorized for Standard Processing.',
+        message: `Application ${applicationId} has been verified and categorized for Standard Processing.`,
         type: 'success',
       });
 
@@ -674,8 +674,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setTimeline((prev) => [evt, ...prev]);
 
+    if (decision === 'approve') {
+      const compNotif: NotificationItem = {
+        id: `notif_comp_${Date.now()}`,
+        userId: 'usr_rahul_01',
+        applicationId: appId,
+        type: 'completed',
+        title: `✓ APPLICATION COMPLETED: ${appId}`,
+        message: 'Your application has been successfully processed.',
+        timestamp: 'Just now',
+        isRead: false,
+        actionUrl: 'applicant_dashboard',
+      };
+      setNotifications((prev) => [compNotif, ...prev]);
+    }
+
     addToast({
-      title: `Application ${appId} Updated`,
+      title: `Application ${appId} Certified`,
       message: `Status updated to ${newStatus.replace('_', ' ').toUpperCase()}`,
       type: severity,
     });
