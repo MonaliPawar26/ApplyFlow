@@ -68,12 +68,12 @@ export const LandingPage: React.FC = () => {
               variant="primary"
               onClick={() => {
                 resetDemoScenario();
-                navigateToApplication('APP-1024', 'validation_center');
+                navigateToApplication('APP-10284', 'applicant_dashboard');
               }}
               rightIcon={<ArrowRight className="w-4 h-4" />}
               className="bg-blue-600 hover:bg-blue-700 shadow-sm font-semibold"
             >
-              Launch Live Demo
+              Try Live Demo
             </Button>
           </div>
         </div>
@@ -134,12 +134,12 @@ export const LandingPage: React.FC = () => {
             variant="outline"
             onClick={() => {
               resetDemoScenario();
-              navigateToApplication('APP-1024', 'correction_workspace');
+              navigateToApplication('APP-10284', 'applicant_dashboard');
             }}
             leftIcon={<Play className="w-4 h-4 text-blue-500" />}
             className="w-full sm:w-auto font-semibold"
           >
-            View Interactive Demo (APP-1024)
+            Try Live Demo
           </Button>
         </motion.div>
 

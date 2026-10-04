@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -201,6 +201,16 @@ export const DecisionChainDrawer: React.FC<DecisionChainDrawerProps> = ({
     return buildMockChain(issue);
   }, [issue]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   const handleOpenCorrectionStudio = () => {
     onClose();
     setCurrentRoute('correction_workspace');
@@ -263,6 +273,8 @@ export const DecisionChainDrawer: React.FC<DecisionChainDrawerProps> = ({
                 </div>
                 <button
                   onClick={onClose}
+                  aria-label="Close Decision Chain Drawer"
+                  data-testid="close-decision-chain"
                   className="flex-shrink-0 p-1.5 rounded-lg text-slate-400 dark:text-slate-600
                     hover:text-slate-600 dark:hover:text-slate-300
                     hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"

@@ -46,7 +46,7 @@ export const ValidationCenter: React.FC = () => {
     setCurrentRoute,
   } = useApp();
 
-  const [expandedIssueId, setExpandedIssueId] = useState<string | null>('issue_missing_address');
+  const [expandedIssueId, setExpandedIssueId] = useState<string | null>('issue_name_mismatch');
 
   const { validation, status, id, priorityReason, slaDeadline } = activeApplication;
   const isValidated = status === 'validated' || status === 'completed';
@@ -457,6 +457,7 @@ export const ValidationCenter: React.FC = () => {
                             <Button
                               size="sm"
                               variant="outline"
+                              data-testid="decision-chain-btn"
                               onClick={() => setSelectedIssueForChain(issue)}
                               leftIcon={<Network className="w-3.5 h-3.5 text-blue-500" />}
                             >
@@ -465,6 +466,7 @@ export const ValidationCenter: React.FC = () => {
                             <Button
                               size="sm"
                               variant="primary"
+                              data-testid="fix-in-correction-btn"
                               onClick={() => navigateToApplication(id, 'correction_workspace')}
                               rightIcon={<ArrowRight className="w-3.5 h-3.5" />}
                               className="bg-blue-600 hover:bg-blue-700"
